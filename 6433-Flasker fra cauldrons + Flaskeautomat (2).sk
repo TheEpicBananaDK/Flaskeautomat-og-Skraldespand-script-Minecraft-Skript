@@ -1,0 +1,32 @@
+on right click on cauldron:
+    if {%player%:%location of event-block%} is not set:
+        set {%player%:%location of event-block%} to false
+
+    if {%player%:%location of event-block%} is false:
+        set {%player%:%location of event-block%} to true
+        give player a glass bottle with name "&6&lPantflaske" with lore "&6(?) Retunere denne flaske til en pantautomat (?)"
+        send "&a&l(?) Tillykke, du fandt en pantflaske! (?)"
+        wait 5 minutes
+        set {%player%:%location of event-block%} to false
+
+    if {%player%:%location of event-block%} is true:
+        send "&c&l(?) Der er ingen flasker heri (?)"
+
+on right click on dispenser:
+  cancel event
+  if player's held item is not glass bottle named "&6&lPantflaske" with lore "&6(?) Retunere denne flaske til en pantautomat (?)":
+    send "&cDu skal have &6&lpantflaske(r) &ci hÃ¥nden, for at kunne pante! (?)"
+
+  if player's held item is glass bottle named "&6&lPantflaske" with lore "&6(?) Retunere denne flaske til en pantautomat (?)":
+    set {_amount} to amount of glass bottle named "&6&lPantflaske" with lore "&6(?) Retunere denne flaske til en pantautomat (?)" in player's inventory
+    send "&6Du pantede &a&l%{_amount}% &6flaske(r), og modtog &a&l%{_amount}*2%$"
+    add {_amount}*2 to balance of player
+    remove all glass bottles named "&6&lPantflaske" with lore "&6(?) Retunere denne flaske til en pantautomat (?)" from the inventory of player
+
+command /flaske:
+  trigger:
+    if player has permission "admin.rettigheder":
+      give player a glass bottle with name "&6&lPantflaske" with lore "&6(?) Retunere denne flaske til en pantautomat (?)"
+      send "[&4Server&8] &cDu modtog en pantflaske"
+    else:
+      send "&8[&4Server&8] &cDu har ikke adgang til denne kommando!"
